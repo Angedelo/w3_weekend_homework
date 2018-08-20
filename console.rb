@@ -32,11 +32,11 @@ customer2 = Customer.new({
   })
 customer2.save
 
-ticket1 = Ticket.new({
-  'film_id' => film1.id,
-  'customer_id' => customer1.id
-  })
-ticket1.save
+# ticket1 = Ticket.new({
+#   'film_id' => film1.id,
+#   'customer_id' => customer1.id
+#   })
+# ticket1.save
 
 ticket2 = Ticket.new({
   'film_id' => film2.id,
@@ -50,6 +50,7 @@ ticket3 = Ticket.new({
   })
 ticket3.save
 
+customer1.buy_ticket(film1)
 
 binding.pry
 nil

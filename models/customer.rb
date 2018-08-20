@@ -8,7 +8,7 @@ attr_accessor :name, :funds
 def initialize(details)
   @id = details['id'].to_i if details['id']
   @name = details['name']
-  @funds = details['funds']
+  @funds = details['funds'].to_i
 end
 
 def save
@@ -34,6 +34,29 @@ def films
         INNER JOIN tickets
         ON films.id = tickets.film_id
         WHERE customer_id = $1"
+        values = [@id]
+        film_data = SqlRunner.run(sql, values)
+        return Film.map_items(film_data)
+end
+
+def ticket_count_per_customer
+  return self.films.count
+end
+
+def buy_ticket(film)
+  # in customer method as they are responsible for buying a ticket
+  ticket = Ticket.new({
+    'film_id' => film.id,
+    'customer_id' => @id
+    })
+  ticket.save
+  if @funds >= film.price
+     @funds -= film.price
+     self.update
+     puts "Enjoy #{film.title}"
+  else
+     puts "Sorry you don't have enough cash for this"
+  end
 end
 
 def self.all()

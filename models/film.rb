@@ -40,6 +40,10 @@ def customers()
   return Customer.map_items(customer_data)
 end
 
+def ticket_count_per_film
+  return self.customers.count
+end
+
 def self.all()
   sql = "SELECT * FROM films"
   values = []
